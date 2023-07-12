@@ -1,0 +1,100 @@
+CREATE TABLE customer (
+   id INTEGER NOT NULL PRIMARY KEY,
+   name VARCHAR(250),
+   age INT
+);
+
+INSERT INTO
+  customer (id,name, age)
+VALUES
+  (1,"Rakesh", 39),
+  (2,"Sai", 47),
+  (3,"Surya", 68), 
+  (4,"Sam", 40),
+  (5,"Kumar",42),
+  (6,"Ravi", 99),
+  (7,"Rohit", 66),
+  (8,"Tharun", 54);
+
+-----------------------------------------------------------------------------------------------------
+
+CREATE TABLE product (
+  id INTEGER NOT NULL PRIMARY KEY,
+  name VARCHAR(250),
+  price INT,
+  brand VARCHAR(250),
+  category VARCHAR(250)
+);
+
+INSERT INTO
+  product (id,name,price,brand,category)
+VALUES
+  (1,"Rakesh", 390,"Denim","Clothing"),
+  (2,"Sai", 4799,"Asus","Electronic),
+  (3,"Surya", 683,"Lenovo","Electronic"), 
+  (4,"Sam", 405,"Denim","Clothing"),
+  (5,"Kumar",4266,"Apple,"Electronic),
+  (6,"Ravi", 999,"Denim","Clothing"),
+  (7,"Rohit", 667,"Puma","Shoes"),
+  (8,"Tharun", 546,"Denim","Clothing");
+-------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE address(
+  id INTEGER NOT NULL PRIMARY KEY,
+  pin_code INTEGER,
+  door_no VARCHAR(250),
+  city VARCHAR(250),
+  customer_id INTEGER,
+  FOREIGN KEY (customer_id) REFERENCES customer(id) ON DELETE CASCADE
+);
+
+INSERT INTO
+  address (id,pin_code,door_no,city,customer_id)
+VALUES
+  (1,523001,"1-173","Hyderabad",2),
+  (2,523301,"11-4173","Secundrabad",4),
+  (3,522201,"3-13","Warangal",6),
+  (4,525601,"5-17","Ongole",8),
+  (5,523345,"8-193","Kakinada",1),
+  (6,523678,"12-109","Guntur",3);
+
+--------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE cart(
+  id INTEGER NOT NULL PRIMARY KEY,
+  customer_id INTEGER NOT NULL UNIQUE,
+  total_price INTEGER,
+  FOREIGN KEY (customer_id) REFERENCES customer(id) ON DELETE CASCADE
+);
+
+
+
+INSERT INTO
+  cart (id,customer_id,total_price)
+VALUES
+  (1,2,3678),
+  (2,4,8879),
+  (3,6,789),
+  (4,8,399),
+  (5,1,5678),
+  (6,3,4999);
+
+-------------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE cart_product(
+  id INTEGER NOT NULL PRIMARY KEY,
+  cart_id INTEGER,
+  product_id INTEGER,
+  quantity INTEGER,
+  FOREIGN KEY (cart_id) REFERENCES cart(id) ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE
+);
+
+
+INSERT INTO
+  cart_product (id,cart_id,product_id,quantity)
+VALUES
+  (1,2,4,1),
+  (2,4,3,1),
+  (3,6,1,2),
+  (4,8,7,1),
+  (5,1,2,3),
+  (6,3,8,3);
